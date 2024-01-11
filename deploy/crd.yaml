@@ -1,0 +1,71 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: servicecatalogues.abriment.dev
+spec:
+  scope: Namespaced
+  group: abriment.dev
+  names:
+    kind: ServiceCatalogue
+    plural: servicecatalogues
+    singular: servicecatalogue
+    shortNames:
+      - svccs
+      - svcc
+  versions:
+    - name: v1
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - jsonPath: .spec.name
+          description: Sevice catalogue name
+          name: SeviceCatalogueName
+          type: string
+        - jsonPath: .spec.version
+          description: Sevice catalogue version
+          name: SeviceCatalogueVersion
+          type: string
+        - jsonPath: .status.status
+          description: The status of redis cluster
+          name: Status
+          type: string
+        - jsonPath: .metadata.creationTimestamp
+          name: Age
+          type: date
+        - jsonPath: .spec.parameters
+          priority: 1
+          description: Parameter of service catalogue
+          name: Parameters
+          type: string      
+      schema:
+        openAPIV3Schema:
+          description:
+            ServiceCatalogue is the Schema for the servicecatalogues API
+          properties:
+            apiVersion:
+              description:
+                "APIVersion defines the versioned schema of this representation
+                of an object. Servers should convert recognized schemas to the latest
+                internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#resources"
+              type: string
+            kind:
+              description:
+                "Kind is a string value representing the REST resource this
+                object represents. Servers may infer this from the endpoint the client
+                submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object            
+            spec:
+              description: 
+                ServiceCatalogueSpec defines the desired state of ServiceCatalogue
+              properties:
+                name:
+                  type: string
+                  format: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true
+          type: object

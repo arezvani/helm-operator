@@ -1,0 +1,12 @@
+apiVersion: abriment.dev/v1
+kind: ServiceCatalogue
+metadata:
+  name: ali
+spec:
+  name: nginx
+  # version: 
+  parameters:
+    nginx:
+      resources:
+        limits:
+          cpu: "2"

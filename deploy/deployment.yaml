@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-catalogue-operator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      application: service-catalogue-operator
+  template:
+    metadata:
+      labels:
+        application: service-catalogue-operator
+    spec:
+      serviceAccountName: service-catalogue-operator
+      containers:
+      - name: service-catalogue
+        image: nexus.abriment.local:7072/abriment/operator/service-catalogue:v1
+        env:
+        - name: REPO_NAME
+          value: data_repo
+        - name: REPO_UPDATE_INTERVAL
+          value: "600"
+        - name: REPO_USERNAME
+          value: mammadtaghi
+        - name: REPO_PASSWORD
+          value: glpat-pRseQcPcbWBPNxe9qmeP
+        - name: REPO_ADDRESS
+          value: https://gitlab.abriment.com/api/v4/projects/295/packages/helm/stable
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
