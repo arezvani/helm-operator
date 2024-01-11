@@ -18,6 +18,7 @@ spec:
       containers:
       - name: service-catalogue
         image: nexus.abriment.local:7072/abriment/operator/service-catalogue:v1
+        imagePullPolicy: Always
         env:
         - name: REPO_NAME
           value: data_repo

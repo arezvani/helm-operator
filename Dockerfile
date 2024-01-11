@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install curl -y && \
 RUN groupadd -g 1001 abriment && \
     useradd -r -u 1001 -g abriment abriment
 
+RUN mkdir /home/abriment && chown abriment:abriment /home/abriment
 RUN mkdir /operator && chown abriment:abriment /operator
 
 COPY --chown=abriment:abriment . /operator
@@ -40,6 +41,4 @@ RUN pip install  --no-cache -r $DOCKERFILE_PATH/requirements.txt
 
 USER 1001
 
-CMD helm repo add --username $REPO_USERNAME --password $REPO_PASSWORD $REPO_NAME $REPO_ADDRESS
-
-ENTRYPOINT kopf run src/service_catalogue.py --liveness=http://0.0.0.0:8080/healthz
+ENTRYPOINT ["/bin/sh", "-c" , "helm repo add --username $REPO_USERNAME --password $REPO_PASSWORD $REPO_NAME $REPO_ADDRESS && kopf run src/service_catalogue.py --liveness=http://0.0.0.0:8080/healthz"]

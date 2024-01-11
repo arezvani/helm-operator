@@ -1,7 +1,7 @@
 apiVersion: abriment.dev/v1
 kind: ServiceCatalogue
 metadata:
-  name: ali
+  name: test
 spec:
   name: nginx
   # version: 
