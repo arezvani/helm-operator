@@ -17,19 +17,19 @@ spec:
       serviceAccountName: service-catalogue-operator
       containers:
       - name: service-catalogue
-        image: nexus.abriment.local:7072/abriment/operator/service-catalogue:v1
+        image: {{IMAGE_REGISTRY}}/{{IMAGE_REPOSITORY}}:{{IMAGE_TAG}}
         imagePullPolicy: Always
         env:
         - name: REPO_NAME
-          value: data_repo
+          value: {{REPO_NAME}}
         - name: REPO_UPDATE_INTERVAL
-          value: "600"
+          value: {{REPO_UPDATE_INTERVAL}}
         - name: REPO_USERNAME
-          value: mammadtaghi
+          value: {{REPO_USERNAME}}
         - name: REPO_PASSWORD
-          value: glpat-pRseQcPcbWBPNxe9qmeP
+          value: {{REPO_PASSWORD}}
         - name: REPO_ADDRESS
-          value: https://gitlab.abriment.com/api/v4/projects/295/packages/helm/stable
+          value: {{REPO_ADDRESS}}
         livenessProbe:
           httpGet:
             path: /healthz
